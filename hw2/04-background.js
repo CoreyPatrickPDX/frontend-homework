@@ -7,7 +7,7 @@ const colorChange = function randomColorChangeForBodyBackground() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  const a = Math.floor(Math.random() * 10) / 10;
+  const a = 0.5;
   body.style.backgroundColor = `rgb(${r}, ${g}, ${b}, ${a})`;
 };
 let colorChangeInterval = setInterval(colorChange, 3000);
