@@ -27,26 +27,49 @@ const borderColors = [
 ];
 
 // url for the Thrones API
-const url = 'https://thronesapi.com/api/v2/Characters';
+const houseNames = [];
+const houseValues = [];
 
-const renderChart = () => {
-  const donutChart = document.querySelector('.donut-chart');
+document.addEventListener('DOMContentLoaded', async () => {
+  const url = 'https://thronesapi.com/api/v2/Characters';
+  const response = await fetch(url);
+  const data = await response.json();
 
-  new Chart(donutChart, {
-    type: 'doughnut',
-    data: {
-      labels: ['label', 'label', 'label', 'label'],
-      datasets: [
-        {
-          label: 'My First Dataset',
-          data: [1, 12, 33, 5],
-          backgroundColor: backgroundColors,
-          borderColor: borderColors,
-          borderWidth: 1,
-        },
-      ],
-    },
+  data.forEach((character) => {
+    let charHouse = character.family.includes('House ') ? character.family.replace('House ', '') : character.family;
+    charHouse = charHouse.includes('Targar') ? 'Targaryen' : charHouse;
+    charHouse = charHouse.includes('ister') ? 'Lannister' : charHouse;
+    charHouse = charHouse.includes('Lorath') ? 'Lorathi' : charHouse;
+    if (charHouse === ('') || charHouse === 'Unkown' || charHouse === 'Unknown') {
+      charHouse = 'None';
+    }
+    if (!houseNames.includes(charHouse)) {
+      houseNames.push(charHouse);
+      houseValues[houseNames.findIndex((house) => house === charHouse)] = 1;
+    } else {
+      houseValues[houseNames.findIndex((house) => house === charHouse)] += 1;
+    }
   });
-};
 
-renderChart();
+  const renderChart = () => {
+    const donutChart = document.querySelector('.donut-chart');
+
+    new Chart(donutChart, {
+      type: 'doughnut',
+      data: {
+        labels: houseNames,
+        datasets: [
+          {
+            label: 'My First Dataset',
+            data: houseValues,
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
+  };
+
+  renderChart();
+});
