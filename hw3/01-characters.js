@@ -6,7 +6,6 @@ const app = document.querySelector('#results');
 fetch(url)
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
     const row = document.createElement('div');
     row.classList.add('row', 'g-2');
 
