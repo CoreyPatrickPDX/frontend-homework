@@ -10,6 +10,7 @@ function Search(props) {
 
   let [name, setName] = useState('');
   let [pic, setPic] = useState('');
+  let [alt, setAlt] = useState('');
 
   const url = 'https://thronesapi.com/api/v2/Characters';
   useEffect(() => {
@@ -37,6 +38,7 @@ function Search(props) {
         setToggle(true);
         setName(character.fullName);
         setPic(character.imageUrl);
+        setAlt(character.fullName);
       }
     });
   };
@@ -66,7 +68,7 @@ function Search(props) {
       {!isLoaded && <div>Loading...</div>}
 
       <h1>{name}</h1>
-      {toggle && <img src={pic} width="225" height="225"></img>}
+      {toggle && <img src={pic} alt={alt} width="225" height="225"></img>}
       {!match && <div>Sorry, no match ...</div>}
     </main>
   );
