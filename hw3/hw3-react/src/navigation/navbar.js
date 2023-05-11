@@ -41,16 +41,16 @@ function Navbar() {
         </div>
       </nav>
       <Routes>
-        <Route path="/" element={<Home title=" GoT Enthusiast!" />} />
+        <Route path="/" element={<Home title=" Game of Thrones Enthusiast" />} />
 
         <Route
           path="/search"
-          element={<Search title="Search for your favorite character!" />}
+          element={<Search title="Search for your favorite character" />}
         />
 
         <Route
           path="/houses"
-          element={<Houses title="GoT House Distribution" />}
+          element={<Houses title="Game of Thrones Family/House Distribution" />}
         />
       </Routes>
     </div>
