@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+const classes = 'container text-center';
+
 function Search(props) {
   const [post, setPost] = useState('');
   const [data, setData] = useState([]);
@@ -33,7 +35,7 @@ function Search(props) {
     setName('');
 
     data.forEach((character) => {
-      if (post === character.fullName) {
+      if (post.toLowerCase() === character.fullName.toLowerCase()) {
         setMatch(true);
         setToggle(true);
         setName(character.fullName);
@@ -44,7 +46,7 @@ function Search(props) {
   };
 
   return (
-    <main className="container">
+    <main className={classes}>
       <h1 className="text-black">{title}</h1>
 
       <div className="input-group">

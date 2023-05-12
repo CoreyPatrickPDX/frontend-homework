@@ -6,12 +6,9 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 const styles = {
-  chartContainer: {
-    maxWidth: '500px',
-    width: '60%',
-    height: '60%',
-    margin: '20px auto',
-  },
+  width: '60%',
+  height: '60%',
+  margin: '20px auto',
 };
 
 function Houses(props) {
@@ -70,7 +67,7 @@ function Houses(props) {
     <section className='container'>
       <h1>{title}</h1>
       <div>
-        <Doughnut data={data} options={options} />
+        <Doughnut data={data} options={options} style={styles} />
       </div>
     </section>
   );
