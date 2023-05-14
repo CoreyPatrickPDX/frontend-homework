@@ -10,6 +10,20 @@ const backgroundColors = [
   'rgba(40, 159, 64, 0.8)',
   'rgba(210, 199, 199, 0.8)',
   'rgba(78, 52, 199, 0.8)',
+
+  'rgba(60, 162, 235, 0.8)',
+  'rgba(255, 206, 60, 0.8)',
+  'rgba(255, 60, 132, 0.8)',
+  'rgba(60, 192, 192, 0.8)',
+  'rgba(153, 60, 255, 0.8)',
+  'rgba(255, 60, 64, 0.8)',
+  'rgba(60, 199, 199, 0.8)',
+  'rgba(83, 60, 255, 0.8)',
+  'rgba(40, 60, 64, 0.8)',
+  'rgba(60, 199, 60, 0.8)',
+  'rgba(78, 52, 60, 0.8)',
+  'rgba(210, 60, 199, 0.8)',
+  'rgba(78, 52, 199, 0.8)',
 ];
 
 const borderColors = [
@@ -24,29 +38,66 @@ const borderColors = [
   'rgba(40, 159, 64, 1)',
   'rgba(210, 199, 199, 1)',
   'rgba(78, 52, 199, 1)',
+
+  'rgba(60, 162, 235, 1)',
+  'rgba(255, 206, 60, 1)',
+  'rgba(255, 60, 132, 1)',
+  'rgba(60, 192, 192, 1)',
+  'rgba(153, 60, 255, 1)',
+  'rgba(255, 60, 64, 1)',
+  'rgba(60, 199, 199, 1)',
+  'rgba(83, 60, 255, 1)',
+  'rgba(40, 60, 64, 1)',
+  'rgba(60, 199, 60, 1)',
+  'rgba(78, 52, 60, 1)',
+  'rgba(210, 60, 199, 1)',
+  'rgba(78, 52, 199, 1)',
 ];
 
 // url for the Thrones API
-const url = 'https://thronesapi.com/api/v2/Characters';
+const houseNames = [];
+const houseValues = [];
 
-const renderChart = () => {
-  const donutChart = document.querySelector('.donut-chart');
+document.addEventListener('DOMContentLoaded', async () => {
+  const url = 'https://thronesapi.com/api/v2/Characters';
+  const response = await fetch(url);
+  const data = await response.json();
 
-  new Chart(donutChart, {
-    type: 'doughnut',
-    data: {
-      labels: ['label', 'label', 'label', 'label'],
-      datasets: [
-        {
-          label: 'My First Dataset',
-          data: [1, 12, 33, 5],
-          backgroundColor: backgroundColors,
-          borderColor: borderColors,
-          borderWidth: 1,
-        },
-      ],
-    },
+  data.forEach((character) => {
+    let charHouse = character.family.includes('House ') ? character.family.replace('House ', '') : character.family;
+    charHouse = charHouse.includes('Targar') ? 'Targaryen' : charHouse;
+    charHouse = charHouse.includes('ister') ? 'Lannister' : charHouse;
+    charHouse = charHouse.includes('Lorath') ? 'Lorathi' : charHouse;
+    if (charHouse === ('') || charHouse === 'Unkown' || charHouse === 'Unknown') {
+      charHouse = 'None';
+    }
+    if (!houseNames.includes(charHouse)) {
+      houseNames.push(charHouse);
+      houseValues[houseNames.findIndex((house) => house === charHouse)] = 1;
+    } else {
+      houseValues[houseNames.findIndex((house) => house === charHouse)] += 1;
+    }
   });
-};
 
-renderChart();
+  const renderChart = () => {
+    const donutChart = document.querySelector('.donut-chart');
+
+    new Chart(donutChart, {
+      type: 'doughnut',
+      data: {
+        labels: houseNames,
+        datasets: [
+          {
+            label: 'My First Dataset',
+            data: houseValues,
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
+  };
+
+  renderChart();
+});

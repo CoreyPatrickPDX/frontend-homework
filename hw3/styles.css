@@ -13,7 +13,20 @@ h1 {
   text-align: center;
 }
 
+.charImage {
+  height: 320px;
+}
+
+.character {
+  height: 450px;
+}
+
 .donut-chart {
   border-radius: 0.8rem;
   background-color: var(--white);
+}
+
+.character:hover {
+  background-color: var(--blue);
+  color: var(--black);
 }
